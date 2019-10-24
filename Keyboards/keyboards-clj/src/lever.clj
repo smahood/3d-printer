@@ -473,7 +473,7 @@
                     [[x-thickness-rear y-thickness-rear z-thickness-rear :as thickness-rear]
                      [x-offset-rear y-offset-rear z-offset-rear :as offset-rear] :as rear]
                     hole-diameter keycap-thickness]
-  (let [y-offset-keycap -14]
+  (let [y-offset-keycap -13.5]
     (union (translate [4.25 0 0]
                       (union (keycap-vertical-arm [x-thickness-front y-thickness-front z-offset-front]
                                                   [x-offset-front y-offset-keycap 0])
@@ -482,7 +482,7 @@
                              (mounting-hole thickness-front
                                             [x-offset-front y-offset-front z-offset-front]
                                             hole-diameter)))
-           (translate [49.25 0 0]
+           (translate [28.75 0 0]
                       (union (keycap-vertical-arm [x-thickness-front y-thickness-front z-offset-front]
                                                   [x-offset-front y-offset-keycap 0])
                              (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front y-offset-keycap) z-thickness-front]
@@ -494,7 +494,7 @@
                                                      [x-offset-rear y-offset-rear (- z-thickness-rear z-offset-front)])
                              (contact-vertical-arm [x-thickness-rear y-thickness-rear z-offset-rear]
                                                    [x-offset-rear y-offset-rear (- z-offset-rear z-offset-front)])))
-           (translate [94.25 0 0]
+           (translate [69 0 0]
                       (union (keycap-vertical-arm [x-thickness-front y-thickness-front z-offset-front]
                                                   [x-offset-front y-offset-keycap 0])
                              (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front y-offset-keycap) z-thickness-front]
@@ -502,7 +502,7 @@
                              (mounting-hole thickness-front
                                             [x-offset-front y-offset-front z-offset-front]
                                             hole-diameter)))
-           (->> (union (->> (cube 102.5 17 keycap-thickness :center false)
+           (->> (union (->> (cube 78.25 17 keycap-thickness :center false)
                             (translate [0 -0.5 0])))
                 (translate [0 10 (- (/ keycap-thickness 2))])))))
 
@@ -535,33 +535,28 @@
 
 (spit "../lever-left-hand.scad"
       (write-scad
-        (let [thickness-front [4 4 4]
+        (let [thickness-front [3 4 5]
               offset-front [0 30 20]
-              thickness-rear [4 4 4]
+              thickness-rear [3 4 9]
               offset-rear [0 45 20]
               hole-diameter 4.775
               double-levers (lever-front-and-rear [thickness-front offset-front]
                                                   [thickness-rear offset-rear]
                                                   hole-diameter)
               row-offsets (->> (range 5)
-                               (mapv #(* 22.5 %))
+                               (mapv #(* 16 %))
                                (mapv #(vector % 0 0)))
-              thumb-offset-x 84.5]
+              thumb-offset-x 63.75]
           (apply union (conj (mapv #(translate % double-levers) row-offsets)
                              (translate [thumb-offset-x -45 -9] (lever-thumb [thickness-front [0 75 11]]
                                                                              [thickness-rear [0 90 20]]
                                                                              hole-diameter false))
-                             (translate [(+ 13.5 thumb-offset-x) -45 -9] (lever-thumb [thickness-front [0 75 11]]
-                                                                                      [thickness-rear [0 90 20]]
-                                                                                      hole-diameter true))
+                             (translate [(- thumb-offset-x 13) -45 -9] (lever-thumb [thickness-front [0 75 11]]
+                                                                                       [thickness-rear [0 90 20]]
+                                                                                       hole-diameter true))
                              (lever-number [thickness-front offset-front]
                                            [thickness-rear offset-rear]
                                            hole-diameter 2))))))
-
-
-
-
-
 
 
 
