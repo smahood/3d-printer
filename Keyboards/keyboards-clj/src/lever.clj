@@ -443,6 +443,7 @@
     (contact-horizontal-arm [x-thickness-rear (- y-offset-rear y-offset-front) z-thickness-rear]
                             [x-offset-rear y-offset-rear (- z-thickness-rear z-offset-front)])))
 
+
 (defn lever-thumb [[[x-thickness-front y-thickness-front z-thickness-front :as thickness-front]
                     [x-offset-front y-offset-front z-offset-front :as offset-front] :as front]
                    [[x-thickness-rear y-thickness-rear z-thickness-rear :as thickness-rear]
@@ -476,7 +477,7 @@
     (union (translate [4.25 0 0]
                       (union (keycap-vertical-arm [x-thickness-front y-thickness-front z-offset-front]
                                                   [x-offset-front y-offset-keycap 0])
-                             (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front) z-thickness-front]
+                             (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front y-offset-keycap) z-thickness-front]
                                                     [x-offset-front (+ y-thickness-front y-offset-keycap) z-offset-front])
                              (mounting-hole thickness-front
                                             [x-offset-front y-offset-front z-offset-front]
@@ -484,7 +485,7 @@
            (translate [49.25 0 0]
                       (union (keycap-vertical-arm [x-thickness-front y-thickness-front z-offset-front]
                                                   [x-offset-front y-offset-keycap 0])
-                             (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front) z-thickness-front]
+                             (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front y-offset-keycap) z-thickness-front]
                                                     [x-offset-front (+ y-thickness-front y-offset-keycap) z-offset-front])
                              (mounting-hole thickness-front
                                             [x-offset-front y-offset-front z-offset-front]
@@ -496,16 +497,14 @@
            (translate [94.25 0 0]
                       (union (keycap-vertical-arm [x-thickness-front y-thickness-front z-offset-front]
                                                   [x-offset-front y-offset-keycap 0])
-                             (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front) z-thickness-front]
+                             (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front y-offset-keycap) z-thickness-front]
                                                     [x-offset-front (+ y-thickness-front y-offset-keycap) z-offset-front])
                              (mounting-hole thickness-front
                                             [x-offset-front y-offset-front z-offset-front]
                                             hole-diameter)))
            (->> (union (->> (cube 102.5 17 keycap-thickness :center false)
                             (translate [0 -0.5 0])))
-                (translate [0 10 (- (/ keycap-thickness 2))]))
-
-           )))
+                (translate [0 10 (- (/ keycap-thickness 2))])))))
 
 
 (defn lever-front-and-rear [[[x-thickness-front y-thickness-front z-thickness-front :as thickness-front]
