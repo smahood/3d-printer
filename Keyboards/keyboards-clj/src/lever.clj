@@ -327,7 +327,7 @@
                    (with-fn 200)
                    (translate [(/ 12.5 2) 0 0])))
        (mirror [1 0 0])
-       (translate [0 (- 10) 0])))
+       (translate [0 (- 10) (- (/ thickness 2))])))
 
 
 (defn keycap-rear [thickness]
@@ -350,7 +350,7 @@
   "Horizontal arm of the lever keys (keycap side)"
   [[x-thickness y-thickness z-thickness :as thickness]
    [x-translation y-translation z-translation :as translation]]
-  (->> (cube x-thickness y-thickness z-thickness :center false)
+  (->> (cube x-thickness  y-thickness z-thickness :center false)
        (mirror [0 0 1])
        (translate [x-translation (- y-translation) (- (- z-translation z-thickness))])))
 
@@ -398,7 +398,7 @@
                           (with-fn 200)
                           (translate [-0.1 (- outer-radius) 0])))
          (translate [0 0 (+ z-thickness outer-radius)])
-         (translate [x-translation y-translation (- z-translation)])))
+         (translate [x-translation y-translation (- (+ z-translation 1))])))
 
   )
 
@@ -413,15 +413,17 @@
            (keycap-front 2)
            (mirror [1 0 0] (union (keycap-vertical-arm [x-thickness-front y-thickness-front z-offset-front]
                                                        [x-offset-front 0 0])
-                                  (keycap-horizontal-arm [x-thickness-front y-offset-front z-thickness-front]
-                                                         [x-offset-front 0 z-offset-front])
+                                  (keycap-horizontal-arm [x-thickness-front (+ y-offset-front y-thickness-front)  z-thickness-front]
+                                                         [x-offset-front y-thickness-front z-offset-front])
                                   (mounting-hole thickness-front
                                                  [x-offset-front y-offset-front z-offset-front]
                                                  hole-diameter)
+                                  (contact-horizontal-arm [x-thickness-rear (- y-offset-rear y-offset-front) z-thickness-rear]
+                                                            [x-offset-rear y-offset-rear (- z-thickness-rear z-offset-front)])
+
                                   (contact-vertical-arm [x-thickness-rear y-thickness-rear z-offset-rear]
                                                         [x-offset-rear y-offset-rear (- z-offset-rear z-offset-front)])
-                                  (contact-horizontal-arm [x-thickness-rear (- y-offset-rear y-offset-front) z-thickness-rear]
-                                                          [x-offset-rear y-offset-rear (- z-thickness-rear z-offset-front)])))
+                                  ))
            ))))
 
 
@@ -454,7 +456,7 @@
 
           (translate [12.5 -19 0]
                      (lever-front [[4 4 4] [0 30 20]]
-                                  [[4 4 4] [0 50 20]]
+                                  [[4 4 8] [0 100 20]]
                                   4.775 19))
           )))
 
