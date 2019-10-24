@@ -178,133 +178,133 @@
 
 
 
-(let [v-gap (/ 19 2)
-      h-gap 18
-      s-col (union (->> (choc-steno-cap-rectangle 12.5)
+#_(let [v-gap (/ 19 2)
+        h-gap 18
+        s-col (union (->> (choc-steno-cap-rectangle 12.5)
+                          (translate [0 v-gap 0]))
+                     (->> choc-steno-cap-curve-s
+                          (translate [0 (- v-gap) 0])))
+        col (union (->> (choc-steno-cap-rectangle 12.5)
                         (translate [0 v-gap 0]))
-                   (->> choc-steno-cap-curve-s
+                   (->> choc-steno-cap-curved
                         (translate [0 (- v-gap) 0])))
-      col (union (->> (choc-steno-cap-rectangle 12.5)
-                      (translate [0 v-gap 0]))
-                 (->> choc-steno-cap-curved
-                      (translate [0 (- v-gap) 0])))
-      left-star-col (union (->> choc-steno-cap-left-star-rectangle
-                                (translate [0 v-gap 0]))
-                           (->> choc-steno-cap-left-star
-                                (translate [0 (- v-gap) 0])))
-      right-star-col (union (->> choc-steno-cap-right-star-rectangle
-                                 (translate [0 v-gap 0]))
-                            (->> choc-steno-cap-right-star
-                                 (translate [0 (- v-gap) 0])))
-      z-col (union (->> choc-steno-cap-rectangle-z
-                        (translate [0 v-gap 0]))
-                   (->> choc-steno-cap-z
-                        (translate [0 (- v-gap) 0])))
-      georgi-left (->> (union #_(->> left-star-col (translate [0 0 0]))
-                         (->> col (translate [h-gap 0 0]))
-                         #_(->> col (translate [(* 2 h-gap) 0 0]))
-                         #_(->> col (translate [(* 3 h-gap) 0 0]))
-                         #_(->> s-col (translate [(* 4 h-gap) 0 0]))
-                         #_(->> col (translate [(* 5 h-gap) 0 0]))
+        left-star-col (union (->> choc-steno-cap-left-star-rectangle
+                                  (translate [0 v-gap 0]))
+                             (->> choc-steno-cap-left-star
+                                  (translate [0 (- v-gap) 0])))
+        right-star-col (union (->> choc-steno-cap-right-star-rectangle
+                                   (translate [0 v-gap 0]))
+                              (->> choc-steno-cap-right-star
+                                   (translate [0 (- v-gap) 0])))
+        z-col (union (->> choc-steno-cap-rectangle-z
+                          (translate [0 v-gap 0]))
+                     (->> choc-steno-cap-z
+                          (translate [0 (- v-gap) 0])))
+        georgi-left (->> (union #_(->> left-star-col (translate [0 0 0]))
+                           (->> col (translate [h-gap 0 0]))
+                           #_(->> col (translate [(* 2 h-gap) 0 0]))
+                           #_(->> col (translate [(* 3 h-gap) 0 0]))
+                           #_(->> s-col (translate [(* 4 h-gap) 0 0]))
+                           #_(->> col (translate [(* 5 h-gap) 0 0]))
 
-                         )
-                       (rotate Math/PI [0 1 0]))
+                           )
+                         (rotate Math/PI [0 1 0]))
 
-      georgi-right (->> (union (->> right-star-col)
-                               (->> col (translate [(- h-gap) 0 0]))
-                               (->> col (translate [(- (* 2 h-gap)) 0 0]))
-                               (->> col (translate [(- (* 3 h-gap)) 0 0]))
-                               (->> col (translate [(- (* 4 h-gap)) 0 0]))
-                               (->> z-col (translate [(- (* 5 h-gap)) 0 0]))
-                               )
-                        (rotate Math/PI [0 1 0])
-                        (translate [(* 5 h-gap) 0 0]))
+        georgi-right (->> (union (->> right-star-col)
+                                 (->> col (translate [(- h-gap) 0 0]))
+                                 (->> col (translate [(- (* 2 h-gap)) 0 0]))
+                                 (->> col (translate [(- (* 3 h-gap)) 0 0]))
+                                 (->> col (translate [(- (* 4 h-gap)) 0 0]))
+                                 (->> z-col (translate [(- (* 5 h-gap)) 0 0]))
+                                 )
+                          (rotate Math/PI [0 1 0])
+                          (translate [(* 5 h-gap) 0 0]))
 
-      case-left (union
-                  (->> (cube 5 100 50)
-                       (translate [20 10 0]))
-                  (->> (cube 5 100 50)
-                       (translate [-105 10 0])))
+        case-left (union
+                    (->> (cube 5 100 50)
+                         (translate [20 10 0]))
+                    (->> (cube 5 100 50)
+                         (translate [-105 10 0])))
 
-      lever-mid (difference (union
-                              (->> (cube 4 10 8))
-                              (->> (cube 4 50 4)
-                                   (translate [0 20 -2]))
-                              (->> (cube 4 10 10)
-                                   (translate [0 40 -6]))
-                              (->> (cube 4 30 4)
-                                   (translate [0 50 -9]))
-                              (->> (cube 4 4 8)
-                                   (translate [0 63 -7]))
+        lever-mid (difference (union
+                                (->> (cube 4 10 8))
+                                (->> (cube 4 50 4)
+                                     (translate [0 20 -2]))
+                                (->> (cube 4 10 10)
+                                     (translate [0 40 -6]))
+                                (->> (cube 4 30 4)
+                                     (translate [0 50 -9]))
+                                (->> (cube 4 4 8)
+                                     (translate [0 63 -7]))
+                                )
+                              (->> (cylinder 2 5)
+                                   (with-fn 200)
+                                   (rotate [0 (/ Math/PI 2) 0])
+                                   (translate [0 40 -5]))
+
                               )
-                            (->> (cylinder 2 5)
-                                 (with-fn 200)
-                                 (rotate [0 (/ Math/PI 2) 0])
-                                 (translate [0 40 -5]))
 
-                            )
+        lever-rear (->> (difference (union
+                                      (->> (cube 4 10 8)
+                                           (translate [-4.25 10 0]))
+                                      (->> (cube 4 40 4)
+                                           (translate [-4.25 25 -2]))
+                                      (->> (cube 4 10 10)
+                                           (translate [-4.25 40 -6]))
+                                      (->> (cube 4 30 4)
+                                           (translate [-4.25 50 -9]))
+                                      (->> (cube 4 4 8)
+                                           (translate [-4.25 63 -7]))
+                                      )
+                                    (->> (cylinder 2 5)
+                                         (with-fn 200)
+                                         (rotate [0 (/ Math/PI 2) 0])
+                                         (translate [-4.25 40 -5])))
+                        (translate [-18 0 0]))
 
-      lever-rear (->> (difference (union
-                                    (->> (cube 4 10 8)
-                                         (translate [-4.25 10 0]))
-                                    (->> (cube 4 40 4)
-                                         (translate [-4.25 25 -2]))
-                                    (->> (cube 4 10 10)
-                                         (translate [-4.25 40 -6]))
-                                    (->> (cube 4 30 4)
-                                         (translate [-4.25 50 -9]))
-                                    (->> (cube 4 4 8)
-                                         (translate [-4.25 63 -7]))
-                                    )
-                                  (->> (cylinder 2 5)
-                                       (with-fn 200)
-                                       (rotate [0 (/ Math/PI 2) 0])
-                                       (translate [-4.25 40 -5])))
-                      (translate [-18 0 0]))
+        lever-front (->> (difference (union
+                                       #_(->> (cube 13 4 4)
+                                              (translate [0 -10 -9]))
+                                       (->> (cube 4 4 14)
+                                            (translate [4.25 -10 -4]))
+                                       (->> (cube 4 55 4)
+                                            (translate [4.25 16 -9]))
+                                       #_(->> (cube 4 55 4)
+                                              (translate [-4.5 16 -9]))
+                                       (->> (cube 4 10 10)
+                                            (translate [4.25 38.5 -5]))
+                                       #_(->> (cube 4 10 10)
+                                              (translate [-4.5 40 -5]))
+                                       (->> (cube 4 30 4)
+                                            (translate [4.25 50 -9]))
+                                       #_(->> (cube 4 35 4)
+                                              (translate [-4.5 54 -9]))
+                                       #_(->> (cube 8 4 4)
+                                              (translate [0 69.5 -9]))
+                                       (->> (cube 4 4 8)
+                                            (translate [4.5 63 -7])))
+                                     (->> (cylinder 2 20)
+                                          (with-fn 200)
+                                          (rotate [0 (/ Math/PI 2) 0])
+                                          (translate [0 40 -5])))
+                         (translate [-18 0 0]))
 
-      lever-front (->> (difference (union
-                                     #_(->> (cube 13 4 4)
-                                            (translate [0 -10 -9]))
-                                     (->> (cube 4 4 14)
-                                          (translate [4.25 -10 -4]))
-                                     (->> (cube 4 55 4)
-                                          (translate [4.25 16 -9]))
-                                     #_(->> (cube 4 55 4)
-                                            (translate [-4.5 16 -9]))
-                                     (->> (cube 4 10 10)
-                                          (translate [4.25 38.5 -5]))
-                                     #_(->> (cube 4 10 10)
-                                            (translate [-4.5 40 -5]))
-                                     (->> (cube 4 30 4)
-                                          (translate [4.25 50 -9]))
-                                     #_(->> (cube 4 35 4)
-                                            (translate [-4.5 54 -9]))
-                                     #_(->> (cube 8 4 4)
-                                            (translate [0 69.5 -9]))
-                                     (->> (cube 4 4 8)
-                                          (translate [4.5 63 -7])))
-                                   (->> (cylinder 2 20)
-                                        (with-fn 200)
-                                        (rotate [0 (/ Math/PI 2) 0])
-                                        (translate [0 40 -5])))
-                       (translate [-18 0 0]))
-
-      ]
+        ]
 
 
 
 
 
-  (spit "../lever.scad"
-        (write-scad (->> (union georgi-left
-                                #_georgi-right
-                                #_case-left
-                                #_(->> lever-mid
-                                       (translate [3 0 0]))
-                                lever-rear
-                                lever-front)
+    (spit "../lever.scad"
+          (write-scad (->> (union georgi-left
+                                  #_georgi-right
+                                  #_case-left
+                                  #_(->> lever-mid
+                                         (translate [3 0 0]))
+                                  lever-rear
+                                  lever-front)
 
-                         ))))
+                           ))))
 
 (defn spacer []
   (difference (->> (cube 4 10 10)
@@ -525,208 +525,99 @@
 
 
 
-
-
-
-(comment (spit "../lever-front-back.scad"
-               (write-scad (lever-front-and-rear [[4 4 4] [0 30 20]]
-                                                 [[4 4 4] [0 45 20]]
-                                                 4.775))))
-
-(spit "../lever-left-hand.scad"
-      (write-scad
-        (let [thickness-front [3 4 5]
-              offset-front [0 30 20]
-              thickness-rear [3 4 9]
-              offset-rear [0 45 20]
-              hole-diameter 4.775
-              double-levers (lever-front-and-rear [thickness-front offset-front]
-                                                  [thickness-rear offset-rear]
-                                                  hole-diameter)
-              row-offsets (->> (range 5)
-                               (mapv #(* 16 %))
-                               (mapv #(vector % 0 0)))
-              thumb-offset-x 63.75]
+(let [thickness-front [3 4 5]
+      offset-front [0 30 20]
+      thickness-rear [3 4 9]
+      offset-rear [0 45 20]
+      hole-diameter 4.775
+      double-levers (lever-front-and-rear [thickness-front offset-front]
+                                          [thickness-rear offset-rear]
+                                          hole-diameter)
+      row-offsets (->> (range 5)
+                       (mapv #(* 16 %))
+                       (mapv #(vector % 0 0)))
+      thumb-offset-x 63.75
+      front-offset 19]
+  (spit "../lever-left-hand.scad"
+        (write-scad
           (apply union (conj (mapv #(translate % double-levers) row-offsets)
                              (translate [thumb-offset-x -45 -9] (lever-thumb [thickness-front [0 75 11]]
                                                                              [thickness-rear [0 90 20]]
                                                                              hole-diameter false))
                              (translate [(- thumb-offset-x 13) -45 -9] (lever-thumb [thickness-front [0 75 11]]
-                                                                                       [thickness-rear [0 90 20]]
-                                                                                       hole-diameter true))
+                                                                                    [thickness-rear [0 90 20]]
+                                                                                    hole-diameter true))
                              (lever-number [thickness-front offset-front]
                                            [thickness-rear offset-rear]
-                                           hole-diameter 2))))))
+                                           hole-diameter 2)))))
 
+  (spit "../lever-front.scad"
+        (write-scad
+          (lever-front [thickness-front offset-front]
+                       [thickness-rear offset-rear]
+                       hole-diameter front-offset)))
 
+  (spit "../lever-rear.scad"
+        (write-scad
+          (lever-rear [thickness-front offset-front]
+                      [thickness-rear offset-rear]
+                      hole-diameter)))
 
-(comment (spit "../lever-front.scad"
-               (write-scad
-                 (union
+  (spit "../lever-thumb.scad"
+        (write-scad
+          (lever-thumb [thickness-front [0 75 11]]
+                       [thickness-rear [0 90 20]]
+                       hole-diameter true)))
 
-                   (translate [12.5 -19 0]
-                              (lever-front [[4 4 4] [0 30 20]]
-                                           [[4 4 8] [0 100 20]]
-                                           4.775 19))
-                   ))))
+  (spit "../lever-front-back.scad"
+        (write-scad (lever-front-and-rear [thickness-front offset-front]
+                                          [thickness-rear offset-rear]
+                                          hole-diameter)))
 
-
-
-
-
-(comment (spit "../lever-front-weight.scad"
-               (write-scad
-                 (union
-
-                   (lever-front [[4 4 4] [0 30 20]]
-                                [[4 8 8] [0 50 20]]
-                                4.775 19)
-                   ))))
-
-
-
-
+  )
 
 
 
 
+#_(spit "../lever-left-hand.scad"
+        (write-scad
+          (let [thickness-front [3 4 5]
+                offset-front [0 30 20]
+                thickness-rear [3 4 9]
+                offset-rear [0 45 20]
+                hole-diameter 4.775
+                double-levers (lever-front-and-rear [thickness-front offset-front]
+                                                    [thickness-rear offset-rear]
+                                                    hole-diameter)
+                row-offsets (->> (range 5)
+                                 (mapv #(* 16 %))
+                                 (mapv #(vector % 0 0)))
+                thumb-offset-x 63.75]
+            (apply union (conj (mapv #(translate % double-levers) row-offsets)
+                               (translate [thumb-offset-x -45 -9] (lever-thumb [thickness-front [0 75 11]]
+                                                                               [thickness-rear [0 90 20]]
+                                                                               hole-diameter false))
+                               (translate [(- thumb-offset-x 13) -45 -9] (lever-thumb [thickness-front [0 75 11]]
+                                                                                      [thickness-rear [0 90 20]]
+                                                                                      hole-diameter true))
+                               (lever-number [thickness-front offset-front]
+                                             [thickness-rear offset-rear]
+                                             hole-diameter 2))))))
 
 
 
+#_(spit "../lever-front.scad"
+        (write-scad
+          (union
+
+            (lever-front [[4 4 4] [0 30 20]]
+                         [[4 4 8] [0 100 20]]
+                         4.775 19)
+            )))
 
 
 
-
-
-#_(defn lever-rear []
-    (let [v-gap (/ 19 2)
-          h-gap 18
-          s-col (union (->> (choc-steno-cap-rectangle 12.5)
-                            (translate [0 v-gap 0]))
-                       (->> choc-steno-cap-curve-s
-                            (translate [0 (- v-gap) 0])))
-          col (union (->> (choc-steno-cap-rectangle 12.5)
-                          (translate [0 v-gap 0]))
-                     #_(->> choc-steno-cap-curved
-                            (translate [0 (- v-gap) 0])))
-          left-star-col (union (->> choc-steno-cap-left-star-rectangle
-                                    (translate [0 v-gap 0]))
-                               (->> choc-steno-cap-left-star
-                                    (translate [0 (- v-gap) 0])))
-          right-star-col (union (->> choc-steno-cap-right-star-rectangle
-                                     (translate [0 v-gap 0]))
-                                (->> choc-steno-cap-right-star
-                                     (translate [0 (- v-gap) 0])))
-          z-col (union (->> choc-steno-cap-rectangle-z
-                            (translate [0 v-gap 0]))
-                       (->> choc-steno-cap-z
-                            (translate [0 (- v-gap) 0])))
-          georgi-left (->> (union #_(->> left-star-col (translate [0 0 0]))
-                             (->> col (translate [h-gap 0 0]))
-                             #_(->> col (translate [(* 2 h-gap) 0 0]))
-                             #_(->> col (translate [(* 3 h-gap) 0 0]))
-                             #_(->> s-col (translate [(* 4 h-gap) 0 0]))
-                             #_(->> col (translate [(* 5 h-gap) 0 0]))
-
-                             )
-                           (rotate Math/PI [0 1 0]))
-
-          georgi-right (->> (union (->> right-star-col)
-                                   (->> col (translate [(- h-gap) 0 0]))
-                                   (->> col (translate [(- (* 2 h-gap)) 0 0]))
-                                   (->> col (translate [(- (* 3 h-gap)) 0 0]))
-                                   (->> col (translate [(- (* 4 h-gap)) 0 0]))
-                                   (->> z-col (translate [(- (* 5 h-gap)) 0 0]))
-                                   )
-                            (rotate Math/PI [0 1 0])
-                            (translate [(* 5 h-gap) 0 0]))
-
-          case-left (union
-                      (->> (cube 5 100 50)
-                           (translate [20 10 0]))
-                      (->> (cube 5 100 50)
-                           (translate [-105 10 0])))
-
-          lever-mid (difference (union
-                                  (->> (cube 4 10 8))
-                                  (->> (cube 4 50 4)
-                                       (translate [0 20 -2]))
-                                  (->> (cube 4 10 10)
-                                       (translate [0 40 -6]))
-                                  (->> (cube 4 30 4)
-                                       (translate [0 50 -9]))
-                                  (->> (cube 4 4 8)
-                                       (translate [0 63 -7]))
-                                  )
-                                (->> (cylinder 2 5)
-                                     (with-fn 200)
-                                     (rotate [0 (/ Math/PI 2) 0])
-                                     (translate [0 40 -5]))
-
-                                )
-
-          lever-rear (->> (difference (union
-                                        (->> (cube 4 10 8)
-                                             (translate [-4.25 10 0]))
-                                        (->> (cube 4 40 4)
-                                             (translate [-4.25 25 -2]))
-                                        (->> (cube 4 10 10)
-                                             (translate [-4.25 40 -6]))
-                                        (->> (cube 4 30 4)
-                                             (translate [-4.25 50 -9]))
-                                        (->> (cube 4 4 8)
-                                             (translate [-4.25 63 -7]))
-                                        )
-                                      (->> (cylinder 2 5)
-                                           (with-fn 200)
-                                           (rotate [0 (/ Math/PI 2) 0])
-                                           (translate [-4.25 40 -5])))
-                          (translate [-18 0 0]))
-
-          lever-front (->> (difference (union
-                                         #_(->> (cube 13 4 4)
-                                                (translate [0 -10 -9]))
-                                         (->> (cube 4 4 14)
-                                              (translate [4.25 -10 -4]))
-                                         (->> (cube 4 55 4)
-                                              (translate [4.25 16 -9]))
-                                         #_(->> (cube 4 55 4)
-                                                (translate [-4.5 16 -9]))
-                                         (->> (cube 4 10 10)
-                                              (translate [4.25 38.5 -5]))
-                                         #_(->> (cube 4 10 10)
-                                                (translate [-4.5 40 -5]))
-                                         (->> (cube 4 30 4)
-                                              (translate [4.25 50 -9]))
-                                         #_(->> (cube 4 35 4)
-                                                (translate [-4.5 54 -9]))
-                                         #_(->> (cube 8 4 4)
-                                                (translate [0 69.5 -9]))
-                                         (->> (cube 4 4 8)
-                                              (translate [4.5 63 -7])))
-                                       (->> (cylinder 2 20)
-                                            (with-fn 200)
-                                            (rotate [0 (/ Math/PI 2) 0])
-                                            (translate [0 40 -5])))
-                           (translate [-18 0 0]))
-
-          ]
-
-
-
-
-
-      lever-rear))
-
-#_(spit "../lever-rear.scad"
-        (write-scad (lever-rear)))
-
-
-
-#_(spit "../lever-spacer.scad"
-        (write-scad (union (spacer))))
-
-
-
-
-
+(spit "../lever-front-back.scad"
+      (write-scad (lever-front-and-rear [[4 4 4] [0 30 20]]
+                                        [[4 4 4] [0 45 20]]
+                                        4.775)))
