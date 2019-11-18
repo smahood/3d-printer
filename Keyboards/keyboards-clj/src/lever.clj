@@ -335,6 +335,11 @@
                    (translate [0 -0.5 0])))
        (translate [0 (- 10) (- (/ thickness 2))])))
 
+(defn keycap-third-row [thickness]
+  (->> (union (->> (cube 12.5 17 thickness :center false)
+                   (translate [0 -0.5 0])))
+       (translate [0 9 (- (/ thickness 2))])))
+
 
 
 (defn keycap-vertical-arm
@@ -523,22 +528,67 @@
                               [thickness-rear offset-rear]
                               hole-diameter front-offset)))))
 
+(defn lever-single-third-row [[[x-thickness-front y-thickness-front z-thickness-front :as thickness-front]
+                               [x-offset-front y-offset-front z-offset-front :as offset-front] :as front]
+                              [[x-thickness-rear y-thickness-rear z-thickness-rear :as thickness-rear]
+                               [x-offset-rear y-offset-rear z-offset-rear :as offset-rear] :as rear]
+                              hole-diameter]
+  (let [keycap-offset 3.5
+        row-offset -19]
+    (union
+      (keycap-third-row 2)
+      (keycap-vertical-arm [x-thickness-front y-thickness-front z-offset-front]
+                           [keycap-offset row-offset 0])
+      (keycap-horizontal-arm [x-thickness-front (+ y-offset-front row-offset) z-thickness-front]
+                             [keycap-offset row-offset z-offset-front])
+      (mounting-hole thickness-front
+                     [keycap-offset y-offset-front z-offset-front]
+                     hole-diameter)
+      (contact-vertical-arm [x-thickness-rear y-thickness-rear z-offset-rear]
+                            [keycap-offset y-offset-rear (- z-offset-rear z-offset-front)])
+      (contact-horizontal-arm [x-thickness-rear (- y-offset-rear y-offset-front) z-thickness-rear]
+                              [keycap-offset y-offset-rear (- z-thickness-rear z-offset-front)]))))
 
 
-(let [thickness-front [3 4 5]
+(defn lever-3-rows [[[x-thickness-front y-thickness-front z-thickness-front :as thickness-front]
+                     [x-offset-front y-offset-front z-offset-front :as offset-front]]
+                    [[x-thickness-rear y-thickness-rear z-thickness-rear :as thickness-rear]
+                     [x-offset-rear y-offset-rear z-offset-rear :as offset-rear] :as rear]
+                    hole-diameter]
+  (let [front-offset 19] (union
+                           (lever-single-third-row [thickness-front offset-front]
+                                                   [thickness-rear offset-rear]
+                                                   hole-diameter)
+                           (lever-rear [thickness-front offset-front]
+                                       [thickness-rear offset-rear]
+                                       hole-diameter)
+
+                           (translate [12.5 (- front-offset) 0]
+                                      (lever-front [thickness-front offset-front]
+                                                   [thickness-rear offset-rear]
+                                                   hole-diameter front-offset)))))
+
+
+
+
+(let [thickness-front [2.5 4 5]
       offset-front [0 30 20]
-      thickness-rear [3 4 9]
-      offset-rear [0 45 20]
+      thickness-rear [2.5 4 9]
+      offset-rear [0 35 20]
       hole-diameter 4.775
       double-levers (lever-front-and-rear [thickness-front offset-front]
                                           [thickness-rear offset-rear]
                                           hole-diameter)
+      third-row-levers (lever-3-rows [thickness-front offset-front]
+                                     [thickness-rear offset-rear]
+                                     hole-diameter)
+
       row-offsets (->> (range 5)
                        (mapv #(* 16 %))
                        (mapv #(vector % 0 0)))
       thumb-offset-x 63.75
       front-offset 19]
-  (spit "../lever-left-hand.scad"
+  (spit "../lever-left-hand-number-bar.scad"
         (write-scad
           (apply union (conj (mapv #(translate % double-levers) row-offsets)
                              (translate [thumb-offset-x -45 -9] (lever-thumb [thickness-front [0 75 11]]
@@ -550,6 +600,20 @@
                              (lever-number [thickness-front offset-front]
                                            [thickness-rear offset-rear]
                                            hole-diameter 2)))))
+
+  (spit "../lever-left-hand-3-rows.scad"
+        (write-scad
+          (apply union (conj (mapv #(translate % third-row-levers) row-offsets)
+
+                             (translate [thumb-offset-x (- (second offset-rear) 80) -9]
+                                        (lever-thumb [thickness-front [0 75 11]]
+                                                     [thickness-rear [0 80 20]]
+                                                     hole-diameter false))
+                             (translate [(- thumb-offset-x 13) (- (second offset-rear) 80) -9]
+                                        (lever-thumb [thickness-front [0 75 11]]
+                                                     [thickness-rear [0 80 20]]
+                                                     hole-diameter true))
+                             ))))
 
   (spit "../lever-front.scad"
         (write-scad
