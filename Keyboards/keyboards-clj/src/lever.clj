@@ -579,45 +579,8 @@
 
 
 
-#_(spit "../lever-left-hand.scad"
-        (write-scad
-          (let [thickness-front [3 4 5]
-                offset-front [0 30 20]
-                thickness-rear [3 4 9]
-                offset-rear [0 45 20]
-                hole-diameter 4.775
-                double-levers (lever-front-and-rear [thickness-front offset-front]
-                                                    [thickness-rear offset-rear]
-                                                    hole-diameter)
-                row-offsets (->> (range 5)
-                                 (mapv #(* 16 %))
-                                 (mapv #(vector % 0 0)))
-                thumb-offset-x 63.75]
-            (apply union (conj (mapv #(translate % double-levers) row-offsets)
-                               (translate [thumb-offset-x -45 -9] (lever-thumb [thickness-front [0 75 11]]
-                                                                               [thickness-rear [0 90 20]]
-                                                                               hole-diameter false))
-                               (translate [(- thumb-offset-x 13) -45 -9] (lever-thumb [thickness-front [0 75 11]]
-                                                                                      [thickness-rear [0 90 20]]
-                                                                                      hole-diameter true))
-                               (lever-number [thickness-front offset-front]
-                                             [thickness-rear offset-rear]
-                                             hole-diameter 2))))))
 
 
 
-#_(spit "../lever-front.scad"
-        (write-scad
-          (union
-
-            (lever-front [[4 4 4] [0 30 20]]
-                         [[4 4 8] [0 100 20]]
-                         4.775 19)
-            )))
 
 
-
-(spit "../lever-front-back.scad"
-      (write-scad (lever-front-and-rear [[4 4 4] [0 30 20]]
-                                        [[4 4 4] [0 45 20]]
-                                        4.775)))
